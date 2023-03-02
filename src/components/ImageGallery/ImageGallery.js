@@ -24,16 +24,15 @@ export class ImageGallery extends Component {
   //   }
 
   componentDidUpdate(prevProps, prevState) {
-    const prevKeyword = prevProps.keyword;
-    const nextKeyword = this.props.keyword;
+    const prevKeyword = prevState.keyword;
+    const nextKeyword = this.state.keyword;
     const prevPage = prevState.page;
     const nextPage = this.state.page;
 
     if (prevKeyword !== nextKeyword || prevPage !== nextPage) {
-      this.setState(prevState => ({
-        // ...prevState,
+      this.setState({
         status: Status.PENDING,
-      }));
+      });
 
       fetchImage(nextKeyword, nextPage)
         .then(({ hits }) =>
@@ -52,6 +51,17 @@ export class ImageGallery extends Component {
             status: Status.REJECTED,
           }))
         );
+    }
+
+    if (prevProps !== this.props) {
+      const { keyword } = this.props;
+      this.setState({
+        keyword,
+        status: Status.IDLE,
+        images: [],
+        error: null,
+        page: 1,
+      });
     }
   }
 
