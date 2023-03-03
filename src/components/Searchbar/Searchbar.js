@@ -45,10 +45,9 @@ export class Searchbar extends Component {
         draggable: true,
         progress: undefined,
         theme: 'light',
-        // style: {
-        //   width: '400px',
-        //   color: 'red',
-        // },
+        style: {
+          color: 'red',
+        },
       });
     }
 
@@ -70,7 +69,7 @@ export class Searchbar extends Component {
 
           <SearchFormInput
             type="text"
-            // name="keyword"
+            name="keyword"
             value={keyword}
             autoComplete="off"
             autoFocus

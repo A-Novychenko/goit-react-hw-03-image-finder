@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ImageGalleryItem } from 'components/ImageGalleryItem';
 import {
   List,
@@ -11,6 +12,10 @@ import { fetchImage } from '../../services/pixabayAPI';
 import { Loader } from 'components/Loader';
 
 export class ImageGallery extends Component {
+  static propTypes = {
+    keyword: PropTypes.string.isRequired,
+  };
+
   state = {
     searchKeyword: '',
     images: [],
@@ -81,9 +86,6 @@ export class ImageGallery extends Component {
   render() {
     const { images, error, totalHits } = this.state;
     const onchangePage = this.changePage;
-
-    console.log('images', images);
-    console.log('error', error);
 
     return (
       <>
