@@ -29,8 +29,14 @@ export class Searchbar extends Component {
 
     const onSubmit = this.props.onSubmit;
     const { keyword } = this.state;
+    const keywordNormalize = keyword.toLowerCase().trim();
 
-    onSubmit(keyword);
+    if (keywordNormalize !== '') {
+      onSubmit(keywordNormalize);
+    } else {
+      alert('Введіть щось');
+    }
+
     this.setState({ keyword: '' });
   };
 
@@ -49,7 +55,7 @@ export class Searchbar extends Component {
 
           <SearchFormInput
             type="text"
-            name="keyword"
+            // name="keyword"
             value={keyword}
             autoComplete="off"
             autoFocus

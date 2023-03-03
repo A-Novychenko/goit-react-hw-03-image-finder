@@ -8,7 +8,7 @@ export class App extends Component {
   state = { keyword: '' };
 
   handlerKeyword = keyword => {
-    this.setState({ keyword: keyword.toLowerCase().trim() });
+    this.setState({ keyword });
   };
 
   render() {

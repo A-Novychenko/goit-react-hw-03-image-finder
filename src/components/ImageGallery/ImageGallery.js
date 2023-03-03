@@ -20,7 +20,7 @@ export class ImageGallery extends Component {
     page: 1,
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const prevKeyword = prevProps.keyword;
     const nextKeyword = this.props.keyword;
     const PrevSearchKeyword = prevState.searchKeyword;
@@ -33,23 +33,36 @@ export class ImageGallery extends Component {
         status: Status.PENDING,
       });
 
-      setTimeout(() => {
-        fetchImage(NextsearchKeyword, nextPage)
-          .then(({ hits }) =>
-            this.setState(prevState => ({
-              images: [...prevState.images, ...hits],
-              status: Status.RESOLVED,
-              page: nextPage,
-            }))
-          )
-          .catch(error =>
-            this.setState({
-              error,
-              status: Status.REJECTED,
-            })
+      try {
+        const {
+          data: { hits, total },
+        } = await fetchImage(NextsearchKeyword, nextPage);
+
+        console.log(
+          '!!!!!!!!!!!!',
+          await fetchImage(NextsearchKeyword, nextPage)
+        );
+
+        if (!total) {
+          return await Promise.reject(
+            new Error(`"${NextsearchKeyword}" не знайдено !`)
           );
-      }, 30);
+        }
+
+        this.setState(prevState => ({
+          images: [...prevState.images, ...hits],
+          status: Status.RESOLVED,
+          page: nextPage,
+        }));
+      } catch (error) {
+        this.setState({
+          error: error.message,
+          status: Status.REJECTED,
+        });
+      }
     }
+    // setTimeout(() => {
+    // }, 30);
 
     if (prevKeyword !== nextKeyword) {
       this.setState({
@@ -74,6 +87,7 @@ export class ImageGallery extends Component {
     const onchangePage = this.changePage;
 
     console.log('images', images);
+    console.log('error', error);
 
     return (
       <>
@@ -85,10 +99,7 @@ export class ImageGallery extends Component {
         {images.length > 0 && this.state.status !== Status.PENDING && (
           <Button onCLick={onchangePage} />
         )}
-        {this.state.status === Status.REJECTED ||
-          (images.length === 0 && (
-            <h1>!!!!!!!!!!!!!! {error} !!!!!!!!!!!!!!!</h1>
-          ))}
+        {this.state.status === Status.REJECTED && <h1> {error} </h1>}
       </>
     );
   }
