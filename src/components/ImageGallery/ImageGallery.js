@@ -26,7 +26,6 @@ export class ImageGallery extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const prevKeyword = prevProps.keyword;
     const nextKeyword = this.props.keyword;
     const PrevSearchKeyword = prevState.searchKeyword;
     const NextsearchKeyword = this.state.searchKeyword;
@@ -66,7 +65,7 @@ export class ImageGallery extends Component {
       }
     }
 
-    if (prevKeyword !== nextKeyword) {
+    if (prevProps !== this.props) {
       this.setState({
         searchKeyword: nextKeyword,
         images: [],
