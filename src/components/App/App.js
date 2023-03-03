@@ -3,6 +3,7 @@ import { GlobalStyle } from 'constants/GlobalStyles';
 import { Container } from './App.styled';
 import { Searchbar } from 'components/Searchbar';
 import { ImageGallery } from 'components/ImageGallery';
+import { ToastContainer } from 'react-toastify';
 
 export class App extends Component {
   state = { keyword: '' };
@@ -20,6 +21,7 @@ export class App extends Component {
         <Searchbar onSubmit={handlerKeyword}></Searchbar>
         <ImageGallery keyword={keyword} />
         <GlobalStyle />
+        <ToastContainer />
       </Container>
     );
   }
