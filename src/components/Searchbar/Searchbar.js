@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BsSearch } from 'react-icons/bs';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Header,
   SearchForm,
@@ -34,7 +36,20 @@ export class Searchbar extends Component {
     if (keywordNormalize !== '') {
       onSubmit(keywordNormalize);
     } else {
-      alert('Введіть щось');
+      toast.error('Enter text please', {
+        position: 'top-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        // style: {
+        //   width: '400px',
+        //   color: 'red',
+        // },
+      });
     }
 
     this.setState({ keyword: '' });

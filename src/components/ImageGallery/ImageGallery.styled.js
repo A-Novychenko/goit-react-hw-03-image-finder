@@ -12,3 +12,21 @@ export const List = styled.ul`
   margin-left: auto;
   margin-right: auto;
 `;
+
+export const ErrorTitle = styled.h1`
+  text-align: center;
+  color: red;
+`;
+
+export const ErrorDescr = styled.p`
+  text-align: center;
+  color: orangered;
+  font-size: 20px;
+`;
+
+export const EndCollection = styled.p`
+  text-align: center;
+  color: blue;
+  font-size: 20px;
+  font-weight: 500;
+`;
